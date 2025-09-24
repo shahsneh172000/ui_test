@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // Make sure flutter_svg is in pubspec.yaml
+import 'package:image_picker/image_picker.dart';
+import 'preview_screen.dart';
+import 'widgets/image_source_dialog.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
@@ -128,8 +131,18 @@ class MyHomePage extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$title tapped!')));
+          onTap: () async {
+            if (title == 'Fruits & Flowers' || title == 'Leaf') {
+              await showImageSourceDialog(
+                context: context,
+                categoryTitle: title,
+                onPick: (source) => _pickImageAndGo(context, source, title),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Stay tuned for more updates !')),
+              );
+            }
           },
           borderRadius: BorderRadius.circular(15),
           child: Container(
@@ -189,6 +202,35 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _pickImageAndGo(BuildContext context, ImageSource source, String categoryTitle) async {
+  try {
+    final ImagePicker picker = ImagePicker();
+    final XFile? picked = await picker.pickImage(source: source, imageQuality: 95);
+    if (picked == null) {
+      return;
+    }
+    if (!context.mounted) return;
+
+    final bytes = await picked.readAsBytes();
+
+    if (!context.mounted) return;
+
+    // Navigate to preview screen
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => PreviewScreen(
+          imageBytes: bytes,
+          title: categoryTitle,
+        ),
+      ),
+    );
+  } catch (e) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to get image: $e')));
+    }
   }
 }
 
