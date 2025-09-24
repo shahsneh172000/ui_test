@@ -8,6 +8,68 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
 
+  void _showLanguageSelection(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SizedBox(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('English'),
+                onTap: () {
+                  // Set language to English
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('हिंदी'),
+                onTap: () {
+                  // Set language to Hindi
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('ગુજરાતી'),
+                onTap: () {
+                  // Set language to Gujarati
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('मराठी'),
+                onTap: () {
+                  // Set language to Marathi
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('తెలుగు'),
+                onTap: () {
+                  // Set language to Telugu
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('ಕನ್ನಡ'),
+                onTap: () {
+                  // Set language to Kannada
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +115,11 @@ class MyHomePage extends StatelessWidget {
             const SizedBox(height: 20),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showLanguageSelection(context),
+        backgroundColor: const Color(0xFF487530),
+        child: const Icon(Icons.language, color: Colors.white),
       ),
     );
   }
@@ -152,7 +219,7 @@ class MyHomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.08),
+                  color: Colors.black.withOpacity(0.08),
                   spreadRadius: 1,
                   blurRadius: 10,
                   offset: const Offset(0, 5),
@@ -205,10 +272,17 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-Future<void> _pickImageAndGo(BuildContext context, ImageSource source, String categoryTitle) async {
+Future<void> _pickImageAndGo(
+  BuildContext context,
+  ImageSource source,
+  String categoryTitle,
+) async {
   try {
     final ImagePicker picker = ImagePicker();
-    final XFile? picked = await picker.pickImage(source: source, imageQuality: 95);
+    final XFile? picked = await picker.pickImage(
+      source: source,
+      imageQuality: 95,
+    );
     if (picked == null) {
       return;
     }
@@ -221,16 +295,14 @@ Future<void> _pickImageAndGo(BuildContext context, ImageSource source, String ca
     // Navigate to preview screen
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => PreviewScreen(
-          imageBytes: bytes,
-          title: categoryTitle,
-        ),
+        builder: (_) => PreviewScreen(imageBytes: bytes, title: categoryTitle),
       ),
     );
   } catch (e) {
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to get image: $e')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to get image: $e')));
     }
   }
 }
-
