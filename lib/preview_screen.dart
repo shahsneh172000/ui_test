@@ -1,9 +1,7 @@
 import 'dart:typed_data';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image/image.dart' as img;
-import 'package:onnxruntime/onnxruntime.dart';
+import 'preprocess.dart';
+import 'model.dart';
 
 class PreviewScreen extends StatefulWidget {
   const PreviewScreen({
@@ -31,96 +29,28 @@ class _PreviewScreenState extends State<PreviewScreen> {
   @override
   void initState() {
     super.initState();
-    _runInference();
+    _runPipeline();
   }
 
-  List<double> _softmax(List<double> logits) {
-    final maxLogit = logits.reduce((a, b) => a > b ? a : b);
-    final exps = logits.map((logit) => exp(logit - maxLogit)).toList();
-    final sumExps = exps.reduce((a, b) => a + b);
-    return exps.map((exp) => exp / sumExps).toList();
-  }
-
-  Future<void> _runInference() async {
+  Future<void> _runPipeline() async {
     try {
-      // Load the model from assets
-      final rawAssetFile = await rootBundle.load('assets/${widget.modelName}');
-      final bytes = rawAssetFile.buffer.asUint8List();
-
-      // Create session
-      final sessionOptions = OrtSessionOptions();
-      final session = OrtSession.fromBuffer(bytes, sessionOptions);
-
       // Preprocess the image
-      final image = img.decodeImage(widget.imageBytes)!;
-      final resizedImage = img.copyResize(image, width: 224, height: 224);
-
-      final imageBytes = resizedImage.getBytes(order: img.ChannelOrder.rgb);
-      final float32List = Float32List(1 * 3 * 224 * 224);
-
-      for (int y = 0; y < 224; y++) {
-        for (int x = 0; x < 224; x++) {
-          final pixelIndex = y * 224 + x;
-          final r = imageBytes[pixelIndex * 3] / 255.0;
-          final g = imageBytes[pixelIndex * 3 + 1] / 255.0;
-          final b = imageBytes[pixelIndex * 3 + 2] / 255.0;
-
-          float32List[y * 224 + x] = r;
-          float32List[224 * 224 + y * 224 + x] = g;
-          float32List[2 * 224 * 224 + y * 224 + x] = b;
-        }
-      }
-
-      final shape = [1, 3, 224, 224];
-      final inputTensor = OrtValueTensor.createTensorWithDataList(
-        float32List,
-        shape,
-      );
-
-      final inputName = session.inputNames[0];
+      final preprocessedImage = await preprocessImage(widget.imageBytes);
 
       // Run inference
-      final runOptions = OrtRunOptions();
-      final inputs = {inputName: inputTensor};
-      final outputs = session.run(runOptions, inputs);
+      final inferenceResult = await runInference(
+        preprocessedImage,
+        widget.modelName,
+        widget.labels,
+      );
 
-      // Process output
-      if (outputs.isNotEmpty && outputs[0] != null) {
-        final logits = (outputs[0]!.value as List<List<double>>)[0];
-        final probabilities = _softmax(logits);
-
-        double maxProbability = 0;
-        int maxIndex = 0;
-        for (int i = 0; i < probabilities.length; i++) {
-          if (probabilities[i] > maxProbability) {
-            maxProbability = probabilities[i];
-            maxIndex = i;
-          }
-        }
-
-        setState(() {
-          _result = widget.labels[maxIndex];
-          _confidence = maxProbability;
-          _loading = false;
-        });
-      } else {
-        setState(() {
-          _result = 'Error';
-          _confidence = 0.0;
-          _loading = false;
-        });
-      }
-
-      // Release resources
-      inputTensor.release();
-      session.release();
-      sessionOptions.release();
-      runOptions.release();
-      for (var o in outputs) {
-        o?.release();
-      }
+      setState(() {
+        _result = inferenceResult['result'];
+        _confidence = inferenceResult['confidence'];
+        _loading = false;
+      });
     } catch (e) {
-      print("Error running inference: $e");
+      print("Error running pipeline: $e");
       setState(() {
         _result = 'Error';
         _confidence = 0.0;

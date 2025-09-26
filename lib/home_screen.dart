@@ -3,72 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart'; // Make sure flutter_svg is in pu
 import 'package:image_picker/image_picker.dart';
 import 'preview_screen.dart';
 import 'widgets/image_source_dialog.dart';
+import 'home_popup.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
-
-  void _showLanguageSelection(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SizedBox(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('English'),
-                onTap: () {
-                  // Set language to English
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('हिंदी'),
-                onTap: () {
-                  // Set language to Hindi
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('ગુજરાતી'),
-                onTap: () {
-                  // Set language to Gujarati
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('मराठी'),
-                onTap: () {
-                  // Set language to Marathi
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('తెలుగు'),
-                onTap: () {
-                  // Set language to Telugu
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('ಕನ್ನಡ'),
-                onTap: () {
-                  // Set language to Kannada
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +56,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showLanguageSelection(context),
+        onPressed: () => showLanguageSelection(context),
         backgroundColor: const Color(0xFF487530),
         child: const Icon(Icons.language, color: Colors.white),
       ),
