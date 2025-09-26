@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // Make sure flutter_svg is in pubspec.yaml
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'preview_screen.dart';
 import 'widgets/image_source_dialog.dart';
@@ -227,7 +228,27 @@ Future<void> _pickImageAndGo(
     }
     if (!context.mounted) return;
 
-    final bytes = await picked.readAsBytes();
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: picked.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressQuality: 100,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Image',
+          toolbarColor: const Color(0xFF487530),
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(title: 'Crop Image'),
+      ],
+    );
+
+    if (croppedFile == null) {
+      return;
+    }
+
+    final bytes = await croppedFile.readAsBytes();
 
     if (!context.mounted) return;
 
