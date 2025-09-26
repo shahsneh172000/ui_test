@@ -292,10 +292,33 @@ Future<void> _pickImageAndGo(
 
     if (!context.mounted) return;
 
+    String modelName;
+    List<String> labels;
+
+    if (categoryTitle == 'Leaf') {
+      modelName = 'LeafModel.onnx';
+      labels = ['Bacterial', 'Fungal', 'Healthy'];
+    } else {
+      modelName = 'KD.onnx';
+      labels = [
+        'Bacterial Blight',
+        'Calyx Rot',
+        'Cercospora Fungus',
+        'Fruit Rot',
+        'Healthy',
+        'Scab Fungus',
+      ];
+    }
+
     // Navigate to preview screen
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => PreviewScreen(imageBytes: bytes, title: categoryTitle),
+        builder: (_) => PreviewScreen(
+          imageBytes: bytes,
+          title: categoryTitle,
+          modelName: modelName,
+          labels: labels,
+        ),
       ),
     );
   } catch (e) {
