@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../app_localizations.dart';
 
 typedef ImagePickedCallback = Future<void> Function(ImageSource source);
 
@@ -9,6 +10,7 @@ Future<void> showImageSourceDialog({
   required String categoryTitle,
 }) async {
   final Color primary = const Color(0xFF39794F);
+  final localizations = AppLocalizations.of(context);
   final Color secondary = const Color(0xFF3FA67A);
 
   return showDialog<void>(
@@ -41,7 +43,7 @@ Future<void> showImageSourceDialog({
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Choose Image Source',
+                      localizations.getString('selectImageSource')!,
                       style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -54,14 +56,14 @@ Future<void> showImageSourceDialog({
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
+                mainAxisSize: MainAxisSize.min, //TODO: Translate these
+                children: [
+                  const Text(
                     'Instructions',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     '• Ensure the photo is clear and well-lit, preferably using natural daylight.\n'
                     '• Place the fruit or leaf in the center and focus on a single subject.\n'
                     '• Hold the camera steady and keep proper distance to avoid blur.\n'
@@ -91,7 +93,7 @@ Future<void> showImageSourceDialog({
                       await onPick(ImageSource.camera);
                     },
                     icon: const Icon(Icons.photo_camera_rounded),
-                    label: const Text('Use Camera', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                    label: Text(localizations.getString('camera')!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
@@ -106,7 +108,7 @@ Future<void> showImageSourceDialog({
                       await onPick(ImageSource.gallery);
                     },
                     icon: const Icon(Icons.photo_library_rounded),
-                    label: const Text('Pick from Gallery', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                    label: Text(localizations.getString('gallery')!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   ),
                 ],
               ),
@@ -117,5 +119,3 @@ Future<void> showImageSourceDialog({
     },
   );
 }
-
-

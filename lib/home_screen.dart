@@ -4,6 +4,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'preview_screen.dart';
 import 'widgets/image_source_dialog.dart';
+import 'app_localizations.dart';
 import 'home_popup.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -12,45 +13,47 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(context),
-            _buildSectionTitle('Diseases'),
+            _buildHeader(context, localizations),
+            _buildSectionTitle(localizations.diseases),
             _buildCategoryButton(
               context,
               'assets/icons/fruit.svg', // Replace with your actual SVG file path
-              'Fruits & Flowers',
-              'Identify diseases affecting the fruit',
+              localizations.getString('fruit')!,
+              localizations.getString('fruit_subtitle')!,
             ),
             _buildCategoryButton(
               context,
               'assets/icons/leaf.svg', // Replace with your actual SVG file path
-              'Leaf',
-              'Analyze and identify leaf diseases',
+              localizations.getString('leaf')!,
+              localizations.getString('leaf_subtitle')!,
             ),
             _buildCategoryButton(
               context,
               'assets/icons/root.svg', // Corrected to existing asset file
-              'Roots',
-              'Check for diseases affecting the roots',
+              localizations.getString('root')!,
+              localizations.getString('root_subtitle')!,
             ),
             const SizedBox(height: 10),
-            _buildSectionTitle('Insects & Pests'),
+            _buildSectionTitle(localizations.insectsAndPests),
             _buildCategoryButton(
               context,
               'assets/icons/insects.svg', // Replace with your actual SVG file path
-              'Live & Dead Insects Images',
-              'Identify common insects and pests',
+              localizations.getString('insects_title')!,
+              localizations.getString('insects_subtitle')!,
             ),
             _buildCategoryButton(
               context,
               'assets/icons/mix.svg', // Use existing mixed/flowers-like icon
-              'Fruits, Flowers & Leaves Images',
-              'Identify pests affecting flowers',
+              localizations.getString('flowers_title')!,
+              localizations.getString('flowers_subtitle')!,
             ),
             const SizedBox(height: 20),
           ],
@@ -65,7 +68,7 @@ class MyHomePage extends StatelessWidget {
   }
 
   // Header Widget
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, AppLocalizations localizations) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(top: 60, bottom: 25, left: 20, right: 20),
@@ -89,19 +92,19 @@ class MyHomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Text(
-                  'AnarRakshak',
-                  style: TextStyle(
+                  localizations.appTitle,
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFa5d6a7),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
-                  'Your Pomegranate Farm Guard',
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
+                  localizations.appTagline,
+                  style: const TextStyle(fontSize: 16, color: Colors.white70),
                 ),
               ],
             ),
@@ -139,7 +142,9 @@ class MyHomePage extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () async {
-            if (title == 'Fruits & Flowers' || title == 'Leaf') {
+            final localizations = AppLocalizations.of(context);
+            if (title == localizations.getString('fruit') ||
+                title == localizations.getString('leaf')) {
               await showImageSourceDialog(
                 context: context,
                 categoryTitle: title,
@@ -147,7 +152,9 @@ class MyHomePage extends StatelessWidget {
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Stay tuned for more updates !')),
+                SnackBar(
+                  content: Text(localizations.getString('featureComingSoon')!),
+                ),
               );
             }
           },
@@ -255,7 +262,8 @@ Future<void> _pickImageAndGo(
     String modelName;
     List<String> labels;
 
-    if (categoryTitle == 'Leaf') {
+    final localizations = AppLocalizations.of(context);
+    if (categoryTitle == localizations.getString('leaf')) {
       modelName = 'LeafModel.onnx';
       labels = ['Bacterial', 'Fungal', 'Healthy'];
     } else {

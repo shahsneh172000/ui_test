@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'app_localizations.dart';
 import 'preprocess.dart';
+import 'management_screen.dart';
 import 'model.dart';
 
 class PreviewScreen extends StatefulWidget {
@@ -61,6 +63,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -107,16 +110,16 @@ class _PreviewScreenState extends State<PreviewScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Result:',
-                            style: TextStyle(
+                          Text(
+                            localizations.getString('resultLabel')!,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            _result!,
+                            localizations.getString(_result!) ?? _result!,
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w600,
@@ -124,9 +127,9 @@ class _PreviewScreenState extends State<PreviewScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          const Text(
-                            'Confidence Score:',
-                            style: TextStyle(
+                          Text(
+                            localizations.getString('confidenceScoreLabel')!,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -142,6 +145,32 @@ class _PreviewScreenState extends State<PreviewScreen> {
                         ],
                       ),
                     ),
+                  const SizedBox(height: 20),
+                  if (!_loading && _result != null && _result != 'Healthy' && _result != 'Error')
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF39794F),
+                        foregroundColor: Colors.white,
+                        minimumSize: const Size.fromHeight(52),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ManagementScreen(
+                              diseaseName: _result!,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.healing),
+                      label: Text(
+                        AppLocalizations.of(context).showManagementTechniques,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -152,6 +181,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
   }
 
   Widget _buildHeader() {
+    final localizations = AppLocalizations.of(context);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(top: 60, bottom: 25, left: 20, right: 20),
@@ -168,26 +198,26 @@ class _PreviewScreenState extends State<PreviewScreen> {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          Image(image: AssetImage('assets/logo.png'), height: 80),
-          SizedBox(width: 16),
+        children: [
+          const Image(image: AssetImage('assets/logo.png'), height: 80),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'AnarRakshak',
-                  style: TextStyle(
+                  localizations.appTitle,
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFa5d6a7),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
-                  'Your Pomegranate Farm Guard',
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
+                  localizations.appTagline,
+                  style: const TextStyle(fontSize: 16, color: Colors.white70),
                 ),
               ],
             ),
