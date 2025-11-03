@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_test/session_validator.dart';
 import 'package:ui_test/login_or_register_page.dart';
 import 'package:ui_test/home_screen.dart';
 
@@ -13,7 +14,11 @@ class AuthWrapper extends StatelessWidget {
       builder: (_, AsyncSnapshot<User?> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final User? user = snapshot.data;
-          return user == null ? const LoginOrRegisterPage() : const MyHomePage(title: 'AnarRakshak');
+          if (user == null) {
+            return const LoginOrRegisterPage();
+          }
+          // If user is logged in, wrap the home page with SessionValidator
+          return const SessionValidator(child: MyHomePage(title: 'AnarRakshak'));
         }
         return const Scaffold(body: Center(child: CircularProgressIndicator()));
       },
