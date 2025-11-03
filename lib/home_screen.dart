@@ -7,55 +7,75 @@ import 'widgets/image_source_dialog.dart';
 import 'auth_service.dart';
 import 'home_popup.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool _isLoggingOut = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context),
-            _buildSectionTitle('Diseases'),
-            _buildCategoryButton(
-              context,
-              'assets/icons/fruit.svg', // Replace with your actual SVG file path
-              'Fruits & Flowers',
-              'Identify diseases affecting the fruit',
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                _buildSectionTitle('Diseases'),
+                _buildCategoryButton(
+                  context,
+                  'assets/icons/fruit.svg', // Replace with your actual SVG file path
+                  'Fruits & Flowers',
+                  'Identify diseases affecting the fruit',
+                ),
+                _buildCategoryButton(
+                  context,
+                  'assets/icons/leaf.svg', // Replace with your actual SVG file path
+                  'Leaf',
+                  'Analyze and identify leaf diseases',
+                ),
+                _buildCategoryButton(
+                  context,
+                  'assets/icons/root.svg', // Corrected to existing asset file
+                  'Roots',
+                  'Check for diseases affecting the roots',
+                ),
+                const SizedBox(height: 10),
+                _buildSectionTitle('Insects & Pests'),
+                _buildCategoryButton(
+                  context,
+                  'assets/icons/insects.svg', // Replace with your actual SVG file path
+                  'Live & Dead Insects Images',
+                  'Identify common insects and pests',
+                ),
+                _buildCategoryButton(
+                  context,
+                  'assets/icons/mix.svg', // Use existing mixed/flowers-like icon
+                  'Fruits, Flowers & Leaves Images',
+                  'Identify pests affecting flowers',
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
-            _buildCategoryButton(
-              context,
-              'assets/icons/leaf.svg', // Replace with your actual SVG file path
-              'Leaf',
-              'Analyze and identify leaf diseases',
+          ),
+          if (_isLoggingOut)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
             ),
-            _buildCategoryButton(
-              context,
-              'assets/icons/root.svg', // Corrected to existing asset file
-              'Roots',
-              'Check for diseases affecting the roots',
-            ),
-            const SizedBox(height: 10),
-            _buildSectionTitle('Insects & Pests'),
-            _buildCategoryButton(
-              context,
-              'assets/icons/insects.svg', // Replace with your actual SVG file path
-              'Live & Dead Insects Images',
-              'Identify common insects and pests',
-            ),
-            _buildCategoryButton(
-              context,
-              'assets/icons/mix.svg', // Use existing mixed/flowers-like icon
-              'Fruits, Flowers & Leaves Images',
-              'Identify pests affecting flowers',
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showLanguageSelection(context),
@@ -64,8 +84,6 @@ class MyHomePage extends StatelessWidget {
       ),
     );
   }
-
-  // Header Widget
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -109,8 +127,11 @@ class MyHomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.white),
             onPressed: () async {
+              setState(() {
+                _isLoggingOut = true;
+              });
               await AuthService().signOut();
-              // The AuthWrapper will handle navigation to the LoginScreen
+              // The AuthWrapper will handle navigation after sign-out.
             },
             tooltip: 'Sign Out',
           ),
@@ -119,7 +140,6 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  // Section Title Widget
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 25, bottom: 10),
@@ -134,7 +154,6 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  // Category Button Widget using SVGs
   Widget _buildCategoryButton(
     BuildContext context,
     String svgAssetPath,
@@ -219,7 +238,6 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
 Future<void> _pickImageAndGo(
   BuildContext context,
   ImageSource source,

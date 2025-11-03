@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,36 +33,76 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // Stream to listen to auth state changes
   Stream<User?> get user => _auth.authStateChanges();
 
-  // Sign in with email and password
-  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+  // Verify phone number and handle OTP
+  Future<void> verifyPhoneNumber({
+    required String phoneNumber,
+    required Function(PhoneAuthCredential) verificationCompleted,
+    required Function(FirebaseAuthException) verificationFailed,
+    required Function(String, int?) codeSent,
+    required Function(String) codeAutoRetrievalTimeout,
+  }) async {
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+    );
+  }
+
+  // Sign in with phone credential (OTP)
+  Future<User?> signInWithCredential(PhoneAuthCredential credential) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final result = await _auth.signInWithCredential(credential);
       User? user = result.user;
-      final deviceId = await _getDeviceId();
-      await _firestore.collection('user_sessions').doc(user!.uid).set({'active_device_id': deviceId});
-
-
-      return result.user;
+      if (user != null) {
+        final deviceId = await _getDeviceId();
+        await _firestore
+            .collection('user_sessions')
+            .doc(user.uid)
+            .set({'active_device_id': deviceId});
+      }
+      return user;
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  // Register with email and password
-  Future<User?> registerWithEmailAndPassword(String email, String password) async {
+  // Sign in with phone number and password
+  Future<User?> signInWithPhoneAndPassword(String phoneNumber, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-        email: email,
+      // Firebase doesn't support phone+password directly.
+      // We construct a dummy email from the phone number to sign in.
+      final String dummyEmail = '+$phoneNumber@anarrakshak.app';
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+        email: dummyEmail,
         password: password,
       );
-            User? user = result.user;
-      final deviceId = await _getDeviceId();
-      await _firestore.collection('user_sessions').doc(user!.uid).set({'active_device_id': deviceId});
-      return result.user;
+      User? user = result.user;
+      if (user != null) {
+        final deviceId = await _getDeviceId();
+        await _firestore.collection('user_sessions').doc(user.uid).set({'active_device_id': deviceId});
+      }
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  // Sign up with phone credential (OTP) and set a password
+  Future<User?> signUpWithPhoneAndPassword(String phoneNumber, String password) async {
+    try {
+      // Create a user with a dummy email and the provided password.
+      final String dummyEmail = '+$phoneNumber@anarrakshak.app';
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: dummyEmail, password: password);
+      User? user = result.user;
+      if (user != null) {
+        final deviceId = await _getDeviceId();
+        await _firestore.collection('user_sessions').doc(user.uid).set({'active_device_id': deviceId});
+      }
+      return user;
     } catch (e) {
       print(e.toString());
       return null;
@@ -69,5 +110,12 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   }
 
   // Sign out
-  Future<void> signOut() async => await _auth.signOut();
+  Future<void> signOut() async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      // Delete the session document on sign out for a clean logout.
+      await _firestore.collection('user_sessions').doc(user.uid).delete();
+    }
+    await _auth.signOut();
+  }
 }

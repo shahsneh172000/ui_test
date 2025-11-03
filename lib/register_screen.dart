@@ -12,12 +12,27 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String email = '';
+
+  String phoneNumber = '';
   String password = '';
   String error = '';
   bool loading = false;
   bool _passwordVisible = false;
 
+  Future<void> _signUp() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => loading = true);
+      final String fullPhoneNumber = '91${phoneNumber.trim()}';
+      dynamic result = await _auth.signUpWithPhoneAndPassword(fullPhoneNumber, password);
+      if (result == null) {
+        setState(() {
+          error = 'Failed to sign up. This phone number might already be in use.';
+          loading = false;
+        });
+      }
+    }
+    // On success, AuthWrapper will navigate to home
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,82 +45,80 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      decoration: const InputDecoration(hintText: 'Email'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() => email = val);
-                      },
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      obscureText: !_passwordVisible,
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+              child: SingleChildScrollView(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Phone Number',
+                            prefixText: '+91 ',
                           ),
-                          onPressed: () {
-                            setState(() => _passwordVisible = !_passwordVisible);
+                          keyboardType: TextInputType.phone,
+                          validator: (val) => val!.length != 10
+                              ? 'Enter a valid 10-digit phone number'
+                              : null, // Basic validation
+                          onChanged: (val) {
+                            setState(() => phoneNumber = val);
                           },
                         ),
-                      ),
-                      validator: (val) => val!.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
-                      onChanged: (val) {
-                        setState(() => password = val);
-                      },
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          obscureText: !_passwordVisible,
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() => _passwordVisible = !_passwordVisible);
+                              },
+                            ),
+                          ),
+                          validator: (val) => val!.length < 6
+                              ? 'Enter a password 6+ chars long'
+                              : null,
+                          onChanged: (val) {
+                            setState(() => password = val);
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(hintText: 'Confirm Password'),
+                          validator: (val) => val != password ? 'Passwords do not match' : null,
+                        ),
+                        const SizedBox(height: 20.0),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF39794F),
+                            foregroundColor: Colors.white,
+                          ),
+                          child: const Text('Sign Up'),
+                          onPressed: () async {
+                            await _signUp();
+                          },
+                        ),
+                        const SizedBox(height: 12.0),
+                        Text(
+                          error,
+                          style: const TextStyle(color: Colors.red, fontSize: 14.0),
+                        ),
+                        TextButton(
+                          onPressed: widget.showLoginScreen,
+                          child: const Text('Already have an account? Sign In'),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20.0),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF39794F),
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text('Sign Up'),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() => loading = true);
-                          try {
-                            dynamic result = await _auth.registerWithEmailAndPassword(
-                                email.trim(), password.trim());
-                            if (mounted && result == null) {
-                              setState(() {
-                                error = 'Please supply a valid email or password.';
-                                loading = false;
-                              });
-                            }
-                          } catch (e) {
-                            setState(() {
-                              error = e.toString();
-                              loading = false;
-                            });
-                          }
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 12.0),
-                    Text(
-                      error,
-                      style: const TextStyle(color: Colors.red, fontSize: 14.0),
-                    ),
-                    TextButton(
-                      onPressed: widget.showLoginScreen,
-                      child: const Text('Already have an account? Sign In'),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

@@ -20,12 +20,14 @@ class _SessionValidatorState extends State<SessionValidator> {
   @override
   void initState() {
     super.initState();
-    _startSessionValidation();
+    if (FirebaseAuth.instance.currentUser != null) {
+      _startSessionValidation();
+    }
   }
 
   @override
   void dispose() {
-    _sessionSubscription?.cancel();
+    _sessionSubscription?.cancel(); // Cancel subscription to prevent memory leaks
     super.dispose();
   }
 
@@ -55,18 +57,23 @@ class _SessionValidatorState extends State<SessionValidator> {
     if (user == null) return;
 
     final docRef = FirebaseFirestore.instance.collection('user_sessions').doc(user.uid);
-
+    
     _sessionSubscription = docRef.snapshots().listen((snapshot) async {
       if (!mounted) return;
 
-      if (snapshot.exists) {
-        final data = snapshot.data();
-        final activeDeviceId = data?['active_device_id'];
-        final currentDeviceId = await _getDeviceId();
+      // If the document doesn't exist, it means the user has been logged out elsewhere
+      // or the session was cleaned up. So, we sign out locally.
+      if (!snapshot.exists) {
+        await FirebaseAuth.instance.signOut();
+        return;
+      }
 
-        if (activeDeviceId != null && activeDeviceId != currentDeviceId) {
-          await FirebaseAuth.instance.signOut();
-        }
+      final data = snapshot.data();
+      final activeDeviceId = data?['active_device_id'];
+      final currentDeviceId = await _getDeviceId();
+
+      if (activeDeviceId != null && activeDeviceId != currentDeviceId) {
+        await FirebaseAuth.instance.signOut();
       }
     });
   }
