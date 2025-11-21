@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'preview_screen.dart';
 import 'widgets/image_source_dialog.dart';
 import 'app_localizations.dart';
+import 'faq_screen.dart';
+import 'feedback_screen.dart';
 import 'home_popup.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -59,10 +61,35 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showLanguageSelection(context),
-        backgroundColor: const Color(0xFF487530),
-        child: const Icon(Icons.language, color: Colors.white),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 6.0,
+        child: SizedBox(
+          height: 60.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.language, color: Color(0xFF39794F), size: 30),
+                tooltip: localizations.selectLanguage,
+                onPressed: () => showLanguageSelection(context),
+              ),
+              IconButton(
+                icon: const Icon(Icons.quiz_outlined, color: Color(0xFF39794F), size: 30),
+                tooltip: localizations.faqTitle,
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FaqScreen()),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.feedback_outlined, color: Color(0xFF39794F), size: 30),
+                tooltip: AppLocalizations.of(context).getString('feedbackTitle'),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const FeedbackScreen())),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

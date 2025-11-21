@@ -270,6 +270,26 @@ class AppLocalizations {
     }
   };
 
+  List<Map<String, String>> getFaqData() {
+    final data =
+        _localizedValues[languageCode]!['faqData'] as List<Map<String, String>>;
+    return data;
+  }
+
+  String get faqTitle {
+    return _localizedValues[languageCode]!['faqTitle'] as String;
+  }
+
+  String? getString(String key, {Map<String, String>? params}) {
+    var value = _localizedValues[languageCode]![key] as String?;
+    if (value != null && params != null) {
+      params.forEach((paramKey, paramValue) {
+        value = value!.replaceAll('{$paramKey}', paramValue);
+      });
+    }
+    return value;
+  }
+
   static final Map<String, Map<String, dynamic>> _localizedValues = {
     'en': {
       'appTitle': 'AnarRakshak',
@@ -322,6 +342,14 @@ class AppLocalizations {
       'flowers_subtitle': 'Identify pests affecting flowers',
       'resultLabel': 'Result:',
       'confidenceScoreLabel': 'Confidence Score:',
+      'faqTitle': 'Frequently Asked Questions',
+      'faqData': _faqData,
+      'feedbackTitle': 'Feedback',
+      'feedbackHint': 'Enter your feedback here...',
+      'submitFeedback': 'Submit Feedback',
+      'feedbackCannotBeEmpty': 'Feedback cannot be empty.',
+      'couldNotLaunchEmail': 'Could not open email app.',
+      'searchFaqsHint': 'Search FAQs...',
     },
     'hi': {
       'appTitle': 'अनाररक्षक',
@@ -599,6 +627,14 @@ class AppLocalizations {
       'confidence': 'आत्मविश्वास: {score}%',
       'resultLabel': 'परिणाम:',
       'confidenceScoreLabel': 'आत्मविश्वास स्कोर:',
+      'faqTitle': 'अक्सर पूछे जाने वाले प्रश्न',
+      'faqData': _faqData, // Needs translation
+      'feedbackTitle': 'प्रतिक्रिया',
+      'feedbackHint': 'अपनी प्रतिक्रिया यहाँ दर्ज करें...',
+      'submitFeedback': 'प्रतिक्रिया भेजें',
+      'feedbackCannotBeEmpty': 'प्रतिक्रिया खाली नहीं हो सकती।',
+      'couldNotLaunchEmail': 'ईमेल ऐप नहीं खुल सका।',
+      'searchFaqsHint': 'पूछे जाने वाले प्रश्न खोजें...',
     },
     'mr': {
       'appTitle': 'अनाररक्षक',
@@ -881,6 +917,14 @@ class AppLocalizations {
       'flowers_subtitle': 'फुलांवर परिणाम करणाऱ्या कीटकांना ओळखा',
       'resultLabel': 'निकाल:',
       'confidenceScoreLabel': 'अचूकता:',
+      'faqTitle': 'सतत विचारले जाणारे प्रश्न',
+      'faqData': _faqData, // Needs translation
+      'feedbackTitle': 'अभिप्राय',
+      'feedbackHint': 'तुमचा अभिप्राय येथे प्रविष्ट करा...',
+      'submitFeedback': 'अभिप्राय सबमिट करा',
+      'feedbackCannotBeEmpty': 'अभिप्राय रिकामा असू शकत नाही.',
+      'couldNotLaunchEmail': 'ईमेल ॲप उघडू शकलो नाही.',
+      'searchFaqsHint': 'सतत विचारले जाणारे प्रश्न शोधा...',
     },
 
 'gu': {
@@ -929,6 +973,18 @@ class AppLocalizations {
       'Fungal Scab': 'ફંગલ દાગ',
       'Bacterial': 'બેક્ટેરિયલ',
       'Fungal': 'ફંગલ',
+      'faqTitle': 'વારંવાર પૂછાતા પ્રશ્નો',
+      'flowers': 'પાંદડા/ફૂલ/ફળ',
+      'insects': 'જંતુઓ',
+      'pestsCategory': 'જંતુઓ અને જીવાતો',
+      'diseaseCategory': 'રોગ',
+      'faqData': _faqData, // Needs translation
+      'feedbackTitle': 'અભિપ્રાય',
+      'feedbackHint': 'તમારો અભિપ્રાય અહીં દાખલ કરો...',
+      'submitFeedback': 'અભિપ્રાય સબમિટ કરો',
+      'feedbackCannotBeEmpty': 'અભિપ્રાય ખાલી ન હોઈ શકે.',
+      'couldNotLaunchEmail': 'ઇમેઇલ એપ્લિકેશન ખોલી શકાઈ નથી.',
+      'searchFaqsHint': 'વારંવાર પૂછાતા પ્રશ્નો શોધો...',
       'management': {
         "Bacterial Blight": {
           "diseaseName": "રોગ: બેક્ટેરિયલ બ્લાઇટ",
@@ -1204,6 +1260,20 @@ class AppLocalizations {
       'confidenceScoreLabel': 'నమ్మకం స్కోరు:',
       'Bacterial Blight': 'బాక్టీరియా బ్లైట్',
       'Calyx Rot': 'కేలిక్స్ కుళ్లు',
+      'faqTitle': 'తరచుగా అడిగే ప్రశ్నలు',
+      'faqData': _faqData, // Needs translation
+      'flowers': 'ఆకులు/పుష్పాలు/పండ్లు',
+      'insects': 'కీటకాలు',
+      'insectsDescription': 'సజీవ/మృత కీటకాలు',
+      'pestsCategory': 'పురుగులు & కీటకాలు',
+      'diseaseCategory': 'వ్యాధి',
+      'root': 'వేరు',
+      'feedbackTitle': 'అభిప్రాయం',
+      'feedbackHint': 'మీ అభిప్రాయాన్ని ఇక్కడ నమోదు చేయండి...',
+      'submitFeedback': 'అభిప్రాయాన్ని సమర్పించండి',
+      'feedbackCannotBeEmpty': 'అభిప్రాయం ఖాళీగా ఉండకూడదు.',
+      'couldNotLaunchEmail': 'ఇమెయిల్ యాప్‌ను తెరవలేకపోయింది.',
+      'searchFaqsHint': 'తరచుగా అడిగే ప్రశ్నలను శోధించండి...',
       'Fungal Cercospora': 'ఫంగల్ సెర్కోస్పోరా',
       'Fruit Rot': 'పండు కుళ్లు',
       'Healthy': 'ఆరోగ్యంగా ఉంది',
@@ -1481,6 +1551,19 @@ class AppLocalizations {
       'confidenceScoreLabel': 'ಆತ್ಮವಿಶ್ವಾಸ ಅಂಕೆ:',
       'Bacterial Blight': 'ಬ್ಯಾಕ್ಟೀರಿಯಾ ಬ್ಲೈಟ್',
       'Calyx Rot': 'ಕೇಲಿಕ್ಸ್ ಕುಳು',
+      'faqTitle': 'ಪದೇ ಪದೇ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು',
+      'faqData': _faqData, // Needs translation
+      'flowers': 'ಎಲೆಗಳು/ಹೂವುಗಳು/ಹಣ್ಣುಗಳು',
+      'insects': 'ಕೀಟಗಳು',
+      'insectsDescription': 'ಜೀವಂತ/ಸತ್ತ ಕೀಟಗಳು',
+      'pestsCategory': 'ಕೀಟಗಳು ಮತ್ತು ಪೀಡೆಗಳು',
+      'diseaseCategory': 'ರೋಗ',
+      'feedbackTitle': 'ಪ್ರತಿಕ್ರಿಯೆ',
+      'feedbackHint': 'ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ...',
+      'submitFeedback': 'ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಸಲ್ಲಿಸಿ',
+      'feedbackCannotBeEmpty': 'ಪ್ರತಿಕ್ರಿಯೆ ಖಾಲಿಯಾಗಿರಲು ಸಾಧ್ಯವಿಲ್ಲ.',
+      'couldNotLaunchEmail': 'ಇಮೇಲ್ ಅಪ್ಲಿಕೇಶನ್ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.',
+      'searchFaqsHint': 'ಪದೇ ಪದೇ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳನ್ನು ಹುಡುಕಿ...',
       'Fungal Cercospora': 'ಶಿಲೀಂಧ್ರ ಸೆರ್ಕೋಸ್ಪೋರಾ',
       'Fruit Rot': 'ಹಣ್ಣು ಕುಳು',
       'Healthy': 'ಆರೋಗ್ಯಕರ',
@@ -1720,20 +1803,7 @@ class AppLocalizations {
     },
 
 
-
-
-
   };
-
-  String? getString(String key, {Map<String, String>? params}) {
-    var value = _localizedValues[languageCode]![key] as String?;
-    if (value != null && params != null) {
-      params.forEach((paramKey, paramValue) {
-        value = value!.replaceAll('{$paramKey}', paramValue);
-      });
-    }
-    return value;
-  }
 
   String get showManagementTechniques {
     return _localizedValues[languageCode]!['showManagementTechniques'] as String;
@@ -1789,6 +1859,277 @@ class AppLocalizations {
     return managementData[managementKey];
   }
 }
+
+final List<Map<String, String>> _faqData = [
+  {
+    "question": "1. Are there any effective chemicals to check bacterial blight completely?",
+    "answer":
+        "There is no single chemical which can check bacterial blight completely, however integrated approach including cultural, nutritional and plant protection operations can completely check bacterial blight. The IDIPM schedule given on NRCP website (www.nrcpomegranate.org) can effectively reduce disease by 50-80% in first year and 70-100% in second year. However, the effective chemicals include bactericide 2-bromo-2- nitropropane-1, 3-diol (Bronopol) @ 0.5 g/L; antibiotic Streptomycin sulphate 90% + Tetracycline hydrochloride 10% @ 0.5g/L; Copper oxychloride 50% WP @ 3 g/L, Copper hydroxide 77% WP @ 2 g/L and Bordeaux mixture 0.5 - 1%. These need to be taken in alteration as in IDIPM. Four sprays of salicylic acid @ 0.3g/L and micronutrient sprays @ 1-1.5 g/L at one month interval starting from pre-flowering, increase disease resistance in plants and also improve fruit yield and quality."
+  },
+  {
+    "question": "2. Is the IDIPM schedule for bacterial blight affected orchards only?",
+    "answer":
+        "The IDIPM schedule is for management of all commonly appearing diseases and insect pests in pomegranate. This schedule can be used in general for getting disease and insect damage free yield in any season, however, farmers should not use Streptocycline (Streptomycin sulphate 90 % + tetracycline hydrochloride 10%) and Bronopol (2-bromo, 2-nitropropane-1, 3-diol) if their orchards are free from bacterial blight and are in bacterial blight free areas."
+  },
+  {
+    "question": "3. In spite of taking so many sprays why we are unable to control bacterial blight?",
+    "answer":
+        "Recommended bactericides when sprayed at lower doses are ineffective in checking the blight disease. Too many sprays (spraying every day or alternate days) with one or the other spray solution results in increase in bacterial blight, as these sprays are without bactericide or contain lower doses of bactericide (than recommended) which are ineffective in killing the blight bacterium on one hand and on the other hand, provide much needed water and humidity to the bacterium for its multiplication and spread (plant to plant spread and entry to new areas). Hence, you do not require too many sprays but proper chemical at right dose to check blight."
+  },
+  {
+    "question": "4. What all precautions we need to take while taking sprays?",
+    "answer":
+        "Self-protection, wind speed, time of spray. Need to include\n• Take only need based sprays at recommended doses, too many sprays increase the disease.\n• Always remove and destroy blight affected fruits before starting any spray.\n• Do not dump affected fruits in or near your orchard, they are source of infection in your field, burry them in pit, cover with soil and allow to decompose.\n• Keep spray interval of 7-14 days depending on weather conditions. Depending on compatibility, combine insecticides, fungicides or micronutrient sprays with bactericidal sprays. Mixture should not form precipitate or cause phytotoxicity on plants.\n• In affected plots, take without fail, additional spray with a bactericide after the rains -when plant leaf surfaces dry up.\n• Always (rains or no rains) mix good quality non-ionic spreader sticker with sprays. Do not use spreader sticker with Bordeaux mixture.\n• Always prepare Bordeaux mixture fresh and use on the same day.\n• To prepare spray mixture, dilute solutions of each chemical separately (based on their recommended dose) and mix to make total volume. If precipitate is formed, either mixture chemicals are not compatible or pH is not proper.\n• The spray solution should have a pH of 6.5 -7 for good results.\n• In case no rains are there for long duration or blight is not increasing, sprays can be taken at 10-15 days’ interval instead of 7 days.\n• The active ingredients (a.i.) in Streptocycline are Streptomycin sulphate 90% + Tetracycline hydrochloride 10% and in Bronopol ‘2-bromo, 2-nitropropane-1, 3-diol 95%.’ Both Streptocycline and Bronopol are available with different trade names from different companies. Check if a.i. is less then increase the dose accordingly.\n• Do not buy products which do not mention percent active ingredient/chemical on the packing."
+  },
+  {
+    "question": "5. When blight affected fruits are removed, blight incidence seems to be more. Is it true?",
+    "answer":
+        "No, it is completely wrong. If you continue spraying with blight affected fruits, you cannot get the desired results. When you do not remove blight affected fruits, you are not able to easily identify new affected fruits because of infection on many fruits all around and you think infection has not increased. But when you remove blight affected fruits before each spray, and if you get new infection you are able to see it easily and you feel removing fruits has increased blight infection."
+  },
+  {
+    "question":
+        "6. We are unable to get any produce since last 2-3 years due to bacterial blight. We have cankers on stems. Is it possible to control the disease now or should we remove the orchard?",
+    "answer":
+        "There is no need to remove orchard affected with blight. The blight is not a systemic disease, blight infection is a localized and restricted to tissues around entry point. Therefore, the pathogenic bacterium is not inside the plant system and trees can be rejuvenated with IDIPM or farmers can adopt the stem solarization technology to get good yield. There are several such examples where farmers are getting normal yield in spite of cankers on the main stem."
+  },
+  {
+    "question": "7. Is there a permanent remedy for controlling bacterial blight?",
+    "answer":
+        "Developing disease resistant variety is the long term solution to control bacterial diseases in any crop. As on date, there is no pomegranate variety / germplasm resistant to bacterial blight. Recently, ICAR-NRCP has developed six step stem solarization technology, if followed properly, can effectively manage the blight in mrig bahar also. With the NRCP’s modified IDIPM schedule farmers can manage the blight from 60 to 100%."
+  },
+  {
+    "question": "8. Why has NRCP not developed any blight resistant variety so far?",
+    "answer":
+        "NRCP has screened all available germplasm (more than 300) seedling population and hybrids developed; all are susceptible to blight to varying degree. Moreover, blight is low in the germplasm and hybrids with negative fruit character (small size, sour in taste, hard seed or devoid of red colour). Hence, we are working at genetic level to overcome this hurdle so as to get both blight resistance varieties with good fruit quality."
+  },
+  {
+    "question": "9. What is the stem solarization technology developed by ICAR-NRCP?",
+    "answer":
+        "The ‘Six Step’ schedule or stem solarization technology to manage Bacterial Blight Disease (BBD) is for the farmers taking mrig bahar and late mrig bahar crop of pomegranate and facing loses due to BBD. Following are the six main steps involved in this technique:\ni. Main Pruning: Soon after harvesting of previous season fruits in December end/to February mid, main pruning should be done, removing crowded branches, damaged and dry branches so that proper light penetration and aeration is there. Secondary and tertiary branches with BBD cankers should be cut 2-4 inches below the cankers and cut end should be pasted with 10% Bordeaux paste. Also apply 10% Bordeaux paste on stem up to 1.5-2 feet from ground. All BBD affected stems and fruits should be destroyed or buried in soil for decomposition.\nii. Rest period management: Apply rest period dose of fertilizer (both organic and inorganic) according to the age of the plant just after main pruning and cleaning of orchard. After the 30 days of the fertilizer application, apply any or combinations of bio-formulations after growing them separately in manure. Start light irrigation. Keep the pomegranate orchard in the rest period for 2 to 4 months. The irrigation should be just enough for nutrient uptake in soil and increase storage in the plant. During rest period, depending on the pest and disease incidence sprays of 1% Bordeaux mixture, neem oil and copper based fungicide should be taken at 15 days’ interval.\niii. Stress period: Stop the irrigation from mid/end March to put crop on stress till 100% natural defoliation occurs. After complete defoliation, remove the cankers visible on the branches by cutting the branch 2 - 4 inches below the canker using secateurs and burn it outside the orchard.\niv. Expose defoliated stems to solar radiation: Expose defoliated naked stems to solar radiation for 15 - 20 days before crop initiation to kill bacteria in the nodes (this is the latest modification and key step to eradicate the bacteria blight pathogen). Monitor this period critically. As soon as 1 - 2 cm tip drying of stems is observed, first irrigation is to be given and farmer should not wait for 20 days.\nv. Light pruning and fertilizer application: Go for light pruning of top 8-10 inches of branches. Remove the cankers if any as mentioned above. Go for pasting with 10% Bordeaux paste as detailed in step I.\nvi. Follow crop season fertilizer and IDIPM spray schedule: Applying recommended doses of crop season fertilizer along with humic acid and sulphur (according to soil pH). Give 4 sprays of micronutrient mixture @ 1.5-2 g/L and salicylic acid @ 300 ppm (30 g in 100 litre) at 1-month interval starting pre-flowering stage. Take sprays of recommended fungicides and insecticides @ 7-10 days’ interval as per plot requirement for quality production. Harvest the good quality produce during December.\nThis technology if followed properly and in community approach farmers can get 100% bacterial blight free mrig bahar produce."
+  },
+  {
+    "question": "10. What are the most important environmental conditions for severe blight attack?",
+    "answer":
+        "Factors favourable for blight development are mainly favourable temperature and humidity for 10-16 hours. Blight starts when the relative humidity is more than 30% and develops at a fast rate above 50% if temperatures between 25.0oC to 35.0oC exist. Rainfall of 0.1 mm or our sprays are sufficient to provide required water for its development and wind speed 3.5 m/sec along with rain help in spread and entry in new locations.\nFactors not favourable for blight development include long durations of temperature below 20oC or above 35oC and RH below 30%."
+  },
+  {
+    "question": "11. Is there any relation of nutrients with bacterial blight disease severity?",
+    "answer":
+        "Yes, balanced use of nutrients is most important for protecting plants not only from bacterial blight but also other diseases and disorders. The nutrients like Ca, Mg, Fe and Mn & Cu when used in balanced proportions, reduce the bacterial blight disease severity while excess of N and K enhances the disease severity."
+  },
+  {
+    "question": "12. What are the most important steps to keep your orchard free from bacterial blight?",
+    "answer":
+        "• Plant with assured disease free planting material.\n• Plant soon after the rains never before the rains.\n• Use recommended manures and fertilizers at right time and right dose.\n• Give lot of organics from planting and avoid inorganic fertilizers for the first two years till first crop regulation.\n• Sanitation of orchard should be maintained.\n• Do not allow people coming from affected orchards for pruning or visit in your orchard.\n• Allow plants to grow at least for two years before taking first crop.\n• Do not take too many fruits per tree. Take optimum number depending on age and plant vigour.\n• Give proper rest to the crop and apply organic manures, micronutrients, potash and phosphorous soon after harvest in rest period with minimum irrigation.\n• Unattended and disease affected orchards should be removed.\n• Take prophylactic sprays throughout the year: crop season, rest period and after rains.\n• Bordeaux mixture (0.5-1%) freshly prepared on day of use is the best broad spectrum bactericide and fungicide.\n• Do not spray anything and everything blindly. Use genuine chemicals.\n• Do not use Streptocycline (Streptomycin sulphate 90% + tetracycline hydrochloride 10%) in blight free orchards/areas."
+  },
+  {
+    "question": "13. What are the most important steps to manage bacterial blight once it is seen in the orchard?",
+    "answer":
+        "• Farmers willing to take the mrig bahar crop, adopt the stem solarization technique developed by NRCP for blight management.\n• If possible, shift to hasta / early hasta bahar crop once disease is observed in the orchard.\n• Give proper rest to the crop and follow recommended practices during rest period.\n• Adopt uniform bahar and management schedule in your locality for all the orchards.\n• Unattended affected orchards should be removed; sanitation of orchard should be maintained.\n• Use recommended manures and fertilizers at right time and right dose. Give lot of organics.\n• Taking proper spray schedules at recommended doses throughout the year (crop season, rest period and after rains).\n• Do not spray anything and everything blindly. Use genuine chemicals which mention active ingredient (a.i.) percent or declare ingredient details with percent of each."
+  },
+  {
+    "question": "14. Are there any alternate hosts for the bacterial blight pathogen?",
+    "answer":
+        "No there are no alternate hosts for bacterial blight pathogen X. axonopodis pv punicae. Neem is reported as alternate hosts by some, are having other bacteria causing blight symptoms on them."
+  },
+  {
+    "question": "15. Bacterial blight is caused by only bacteria or some other organism is also involved?",
+    "answer":
+        "Bacterial blight is caused by bacterium Xanthomonas axonopodis pv punicae only and no other organism is involved with it."
+  },
+  {
+    "question": "16. How do we identify the bacterial blight disease in early stages?",
+    "answer":
+        "• The first symptoms on leaves are small water soaked (oily) spots on the under surface of leaves, which can be seen clearly against light.\n• On fruits, first symptoms are water soaked/oily spots on the outer skin.\n• On twigs, water soaked grey tissue around nodes is seen usually on new/ young twigs. These later turn black brown with water soaked margins in active lesions.\n• To confirm the disease, take samples to nearest laboratory, where laboratory ooze test can confirm bacterial blight instantly. The bacterial spots on fruits and stems will feel sticky to touch with a drop of water and rubbing the finger on it."
+  },
+  {
+    "question": "17. Once it enters the plant after how many days, the disease symptoms can be seen?",
+    "answer":
+        "In a newly established orchard if the planting material is carrying hidden infection of the bacteria (generally axils/dormant buds carry bacteria), the blackening of nodes appears in scattered plants, generally after 5 - 7 months’ age, depending on environmental conditions.\nIn blight infected orchard new infections can be seen between 4 - 7 days after the bacterium enters the leaves/fruits, when water through rains or sprays is available."
+  },
+  {
+    "question": "18. What measures are required to establish a disease free new orchard of pomegranate?",
+    "answer":
+        "Bring planting material from a disease free area/orchard and constantly monitor the orchard for nodal infection, because of reasons given in Q4. It is wise to uproot such infected plants immediately and burn them. Immediately take protective sprays of Streptocycline @ 0.5 g/L + Copper Oxychloride @ 2.5g/L) alternate with Bordeaux mixture (0.5%) at 10 -15 days’ interval or immediately after rains."
+  },
+  {
+    "question": "19. Does bacterial blight spread through air? How long can it travel in air?",
+    "answer":
+        "Bacterial blight spreads through air only when rain storms are there or there is high humidity in air, because the bacterium dies in dry air. In air, it can travel generally short distances infecting neighbouring plants up to few meters, however rain storms may carry them up to long distances."
+  },
+  {
+    "question": "20. What are the different methods of spread for bacterial blight?",
+    "answer":
+        "Bacterial blight can spread through infected planting material, plant to plant contact, rains, run off water and rain/ spray water splashes, wind-blown rain splashes, person handling the plants, contaminated tools, visiting insects."
+  },
+  {
+    "question": "21. Is bacterial blight organism present in soil and if yes, for how long? Can soil be a carrier of blight bacteria?",
+    "answer":
+        "It is present in soil below the blight affected plant or where blight affected plant debris are buried. It cannot remain without pomegranate tissue (leaves, fruits or stems) for more than 30 days. Hence, 25-30 days after plant tissue decomposes in soil blight bacteria Xanthomonas will die. Therefore, soil is not important for spread of bacteria if plant tissue has decomposed."
+  },
+  {
+    "question":
+        "22. I have a badly affected blight orchard, I want to remove and plant new orchard. After how much time of removing blight affected orchard can I plant new orchard?",
+    "answer":
+        "Yes. Remove all plant debris especially affected fruits and stems from orchard and destroy them as these do not decompose easily and take long time. Rake the soil several times for tilling and exposing the soil to sun rays. Best time to do this is in hottest months of the year and then grows some green manure crops like Dhaincha etc. just before the rains start. Plough it in the soil after 50-60 days then plant after the rains when there is good soil moisture and cooler day temperatures for better and disease free establishment of new plants."
+  },
+  {
+    "question": "23. Unable to control Colletotrichum rot (also called plague by farmers)",
+    "answer":
+        "The pathogenic fungus, Colletotrichum attacks fruits in hot humid conditions and results in heavy losses even by itself. Remove affected fruits and destroy/burn them, do not dump in around orchard nor throw elsewhere. Take 2 sprays at 7-day interval with any of the fungicide Tricyclazole 18% + Mancozeb 62% WP @ 2.5 g/L or Propiconazole 25% EC @ 1 ml/L + Azoxystrobin 23% SC @ 1 ml/L or Chlorothalonil 75% WP @ 2 g/L or Mandipropamid 23.4 % SC @ 1 ml/L. or Metiram 55% + Pyraclostrobin 5% EC @ 3 g /L. One systemic and one contact fungicide should be taken per month as preventive from pre flowering stage. If it is around pin prick holes, then fruit sucking moth is the main cause, control fruit sucking moth"
+  },
+  {
+    "question": "24. How to differentiate fruits rots caused by Colletotrichum and Phytophthora during fruiting stage? What are the control measures?",
+    "answer":
+        "Colletotrichum (Anthracnose) rots are brown hard rots with no sporulation on surface and Phytophthora rots are tan coloured rots that are not hard but soft and mushy. It is fast spreading covering entire fruit in 2-3 days. White fungus can be seen in later stages on fruit surface."
+  },
+  {
+    "question": "25. What are the causes of plant wilt?",
+    "answer":
+        "The fungal pathogen Ceratocystis fimbriata is the major cause of wilt and species of Fusarium, Rhizoctonia, Sclerotium, Macrophomina, Phytophthora are occasionally associated with wilt disease of pomegranate. In some sandy/light soils root knot nematode Meloidogyne spp can cause stunting and wilting in association with fungi. Shot hole may be associated with C. fimbriata or may independently result in damage resulting in wilt. Partial or complete plant may also die due to stem borer. Apart from this water scarcity or water logging can also lead to temporary or permanent wilt."
+  },
+  {
+    "question": "26. Is there any fool proof remedy for wilt management?",
+    "answer":
+        "If wilt is due to fungal pathogen and it initiates or damages more than 25-30% plant canopy it is difficult to save that particular plants with chemical treatment. If the treatment is initiated immediately just after initial yellowing symptoms, the adjoining plants can be saved with drenching of Propiconazole 25% EC @ 2 ml/L. The wilt caused due to infestation of pin hole borer can be managed by drenching with Emamectin benzoate 5% SG @ 2 ml/L; while the root-knot nematode can be managed with both chemical nematicides as well as biocontrol agents.  Prophylactic methods such as use of promising bio agents every 6 months are the best solution for wilt management."
+  },
+  {
+    "question": "27. What is package of practices for wilt management?",
+    "answer":
+        "Right and early identification followed by correct management practices is the key to successfully avoid or control wilt problems. Please follow the link https://nrcpomegranate.icar.gov.in/files/Advisory/86.pdf for detailed advisory for wilt."
+  },
+  {
+    "question": "28. When I removed wilt affected plant, I could see that more plants were infected? Some say removing wilt affected plants increases wilt. Is it true?",
+    "answer":
+        "No it is not true. Removing wilt affected plants without proper precautions leads to more wilted plants. Wilt caused by fungi is soil borne disease spreads through soil and planting material from diseased to healthy plants during various intercultural operations. Dry wilted plants should be removed and burnt; they should not be kept dumped in the orchard for firewood. The pathogen can survive for several years in the dead plant and in soil or in infected plant debris. It can spread fast trough wind, rain infecting new plants in the orchard. While removing the wilted plants from the orchard for burning, if the roots / soil on roots having wilt pathogens falls and spreads in orchard can lead to wilting of more plants in the orchard."
+  },
+  {
+    "question": "29. Can Bordeaux mixture be mixed with other fungicide, insecticide or micronutrients?",
+    "answer": "No, mixing of other chemicals in Bordeaux mixture is not recommended, it reduces efficacy of the Bordeaux mixture."
+  },
+  {
+    "question": "30. How to make proper Bordeaux mixture and Bordeaux Paste?",
+    "answer":
+        "I. Bordeaux mixture: Bordeaux mixture if prepared properly is a very effective broad spectrum fungicide. To prepare a good Bordeaux mixture follow the steps below:\nII. (a) Composition: Chemical Quantity Copper Sulphate (CuSO4. 5H20) 1kg* Quick lime/Calcium Oxide (CaO) or Calcium hydroxide Ca(OH)2 [Use fresh stocks] 300-400g* Depending on purity Water 100L *For 0.5%, reduce the quantity of Copper sulphate and lime to half\n(b) Method\n• Dissolve Copper sulphate overnight in 10 litres water in a plastic bucket (suspend in a jute bag to facilitate dissolving).\n• Slake the lime (Calcium oxide); suspend in another bucket having 10 litres of water, and strain through a fine sieve. If quick lime is not available, hydrated lime (Ca(OH)2) can be used.\n• On next day, these two solutions are then poured together through a strainer into a third vessel or spray tank containing 80 litres of water, constantly stirring vigorously with wooden stick. Keep one litre of each solution for pH adjustment.\n• This gives the most finely divided precipitate.\n(c) Tests for Bordeaux mixture:\n• Iron Test: The Bordeaux mixture prepared should not have excess copper in it, as it is toxic to plants. To test this, dip an iron knife or a nail in the upper layer of the solution for a few minutes. A brick red or rusty brown deposition on the metal surface indicates presence of excess copper in the mixture. In such a situation add more lime solution to the mixture till no rust appears on the iron knife.\n• pH Test: To test the pH of mixture, use portable pen type pH meter of good quality and check for pH 7. If pH is below 7; add more lime and if above pH 7 add Copper sulphate to bring it to pH 7.\n(d) Points to Remember:\n• Use mixture for spray immediately after preparation.\n• Do not use iron or galvanized vessels for the preparation of Copper sulphate solutions. Use plastic vessels, earthen or wooden barrels.\n• Do not mix Bordeaux mixture with other chemicals or pesticides also do not mix spreader sticker.\n• Always strain the mixture through a sieve before adding it to spray tank.\nII. Bordeaux Paste (10%): Use 1 kg of Copper sulphate, 1 kg hydrated Lime for 10 litres of water. Use the same procedure as above for preparation except no need to check pH or do Iron test."
+  },
+  {
+    "question": "31. Can we apply copper fungicides during hot dry months?",
+    "answer":
+        "Copper fungicides during hot dry months can be applied with proper irrigation and during evening hours and not more than 2 applications per month are recommended in general. Excessive use in hot dry months leads to phyto-toxicity."
+  },
+  {
+    "question": "32. What are the reasons for fruit cracking and what is the remedy?",
+    "answer":
+        "Fruit cracking can be due to abiotic (water) reasons as well as biotic reasons (bacterial blight or other pathogens). The major reason for abiotic fruit cracking is sudden fluctuation of soil moisture. Application of irrigation or rain after long dry spell and fluctuation of soil moisture content owing to sudden rainfall leads to fruit cracking. The remedy includes:\n• Foliar spray of Boric acid @ 0.25% three times at one-month interval starting from flower bud initiation.\n• Application of gypsum @ 500 – 700 g per plant in soil depending on the pH of soil.\n• Use of plastic or organic mulching.\n• Regulating fluctuation of soil moisture content during fruiting."
+  },
+  {
+    "question": "33. Whether growth regulators prevent fruit cracking?",
+    "answer": "Yes, use of Paclobutrazol @ 300 ppm i.e. 0.3 g/L) reduce fruit cracking to some extent."
+  },
+  {
+    "question": "34. How can I control fruit sucking moth apart from common method of catching and killing the moth after sunset?",
+    "answer":
+        "Fruit bagging with butter paper or polypropylene non-woven bag is the only promising solution for fruit sucking moth. Remove Gulvel (Tinospora sp.) in vicinity of orchard as it is host for larval stages of fruit sucking moth. Do not remove pierced fruits as moth attacks such fruits again and again; collect and destroy the fallen fruits on the ground, take fungicide spray to avoid rot. Banana or guava baits in Nylon bags may be hanged at multiple spots in orchard as moth prefers these fruits. The moth damage is seen from August to November after rains. Change of season is the other alternative."
+  },
+  {
+    "question": "35. What are the benefits of bagging?",
+    "answer":
+        "Bagging improves fruit colour and quality, avoids sun scorching and gives protection against fruit sucking moth and fruit borer if done at proper time and stage of fruit development."
+  },
+  {
+    "question": "36. What bagging material should be used? What is the cost of bagging per fruit?",
+    "answer": "Butter paper and polypropylene non-woven bagging is best. The cost with these materials comes around 50-60 paise per fruit."
+  },
+  {
+    "question": "37. What are the recommendations for bagging?",
+    "answer":
+        "Bagging should be done only as per need. For fruit sucking moth, bag the fruits as soon as first attack is observed, generally in August end or September. For sun scald bagging is required starting February to May after fruit becomes lemon size. Just before bagging take a spray of fungicide + bactericide + insecticide on fruits. Do not bag fruits in rainy season and in blight, fruit rot and mealy bugs affected orchards. Bagged fruits become more prone to bacterial blight, rot and mealy bugs."
+  },
+  {
+    "question": "38. How to overcome bird damage during fruiting stage?",
+    "answer": "By covering fruits with polypropylene bags or covering the plants/plots with nets."
+  },
+  {
+    "question": "39. What are the symptoms of shot or pin hole borer in pomegranate?",
+    "answer":
+        "Shot hole borer (Xyleborus spp.) is a small beetle that infests the collar region of the plant by making numerous pin or shot holes causing a discontinuity in the conducting vessels affecting the conduction of water and nutrients to the upper portion of the plant. Beetle infestations are most easily detected by the presence of entry holes made by them and the presence of frass produced during gallery construction. Affected tree/branch showing yellowing of leaves progressed into partial wilting and finally leads to the death of the tree."
+  },
+  {
+    "question": "40. How to control pin hole borer in pomegranate",
+    "answer":
+        "• Keep pomegranate orchard neat and clean (weed free).\n• Avoid water logging, periodical checking of the plants in the orchard for yellowing of branches and presence of frass/excreta near the stem.\n• Remove the infested branches and destroy by burning.\n• Preventative insecticide sprays on the free area of the stem and branches with Emamectin benzoate 5% SG @ 2 g/L and followed by Azadirachtin 10000 ppm @ 3 ml/L may be taken alternatively at monthly/bi-monthly intervals.\n• Stem pasting should be done at least twice a year; one during rest and another before taking bahar.\n• Curative Measures:\n• 1st Drenching with Emamectin benzoate 5% SG @ 2 g/L + Propiconazole 25 % SC @ 2 ml/L water.\n• 2nd Drenching: 15-20 days after the first with Emamectin benzoate 5% SG @ 2 g/L + Carbendazim 50% WP @ 2 g/L or Imidacloprid 17.8 % SL @ 2 ml/L + Carbendazim 50 % WP @ 2 g/L in a circular fashion and use 5-10 L solution per tree.\n• 3rd drenching can be taken with chemicals of first drenching at 15-20 days after the second treatment based on the prevalence of the pest/severity of the problem."
+  },
+  {
+    "question": "41. Are all nematodes harmful to the plants and humans?",
+    "answer":
+        "• No, All the nematodes are not harmful to humans and plants. In fact, most of the nematodes are free living and play very important role in decomposition of organic matter, nutrient recycling.\n• Some feeds on bacteria, fungi and other nematodes also. Only 25% of the known nematodes cause diseases in plants and human beings."
+  },
+  {
+    "question": "42. What are the most important plant parasitic nematode of Pomegranate?",
+    "answer":
+        "• The Root-Knot Nematode, Meloidogyne incognita is identified as the major causal organisms for wilt disease of pomegranate.\n• Along with the root knot nematode, other plant parasitic species like Rotylenchulus, Aphelenchus and Helicotylenchus were also reported from pomegranate orchards."
+  },
+  {
+    "question": "43. What are the symptoms of Root-Knot Nematode in pomegranate and how to check the infestation of nematode in the orchards?",
+    "answer":
+        "• In general nematode infested plant shows symptoms of nutrient deficiency, yellowing of leaves and stunted growth.\n• It is also observed that sometimes luxuriantly growing plants show reduced or no flowering for long periods (more than 1 year) due to heavy infestation of root knot nematode.\n• With increase in the population of nematode, feeder roots are damaged resulting in less nutrient uptake from the soil. This also results in flower drop and losses in terms of quality (small sized fruits) and quantity (less number of fruits per plant).\n• In order to confirm the nematode infestation, please check new feeder roots just below the drippers. The knots/galls on the newer pomegranate roots just below the dripper, confirm the infestation of root-knot nematode."
+  },
+  {
+    "question": "44. Is Root-knot nematode play any role in wilt disease of pomegranate?",
+    "answer":
+        "• Yes, definitely, nematode damages / injures the plant roots during penetration which makes easy roots for invasion of pathogenic fungi like Ceratocystis fimbriata and Fusarium oxysporium which causes wilt of pomegranate.\n• Root-knot nematode is the second major cause of wilt disease in pomegranate after C. fimbriata. Presence of Root-Knot nematode increase the spread and severity of wilt disease."
+  },
+  {
+    "question": "45. What is the primary source of nematode infestation?",
+    "answer":
+        "• Infected planting material is the major and primary source of spread of root-knot nematode in new localities even to other states. States like Gujarat and Rajasthan where pomegranate is new crop; nematode problem became severe due to planting of infected saplings from other places.\n• The intercultural operations like manure application, farm machinery, flooding/runoff irrigation water can spread the nematode within and nearby orchards."
+  },
+  {
+    "question": "46. Why nematode gets unnoticed till the most of roots converts into nematode galls?",
+    "answer":
+        "• Root-Knot Nematode is microscopic soil borne pathogen infecting plant roots. Infected planting material is the major and primary source nematode infestation.\n• The general symptoms as told above are of nutrient deficiency. Farmers usually do not uproot and check the plants for presence of roots galls.\n• After planting of nematode infested saplings, nematode multiply rapidly under field condition. Under the optimum temperature condition (27-30°C), the nematode can complete its life cycle (egg to egg) in 3 to 5 weeks’ time.\n• Due to perennial nature of crop, the nematode can complete several (10-14) generation in a year leading to rapid population build-up. Within the span of 2 years nematode infest almost all the new roots. These heavily galled roots can be observed during the weeding and fertilizer application."
+  },
+  {
+    "question": "47. What are the physical management practices for root-knot management in pomegranate?",
+    "answer":
+        "• Use of solarized/ sterilized soil (potting mixture) for saplings eliminates almost all soil borne pathogens including nematodes.\n• Soil solarization for 6 weeks in the hottest month (April-May) using 50-75 LLDPE (Linear Low Density Polyethylene) sheet helps to reduce the soil borne pathogen including nematodes."
+  },
+  {
+    "question": "48. Can we manage Root-Knot nematode problem using bio-formulations? Which are the promising bio-formations for nematode management?",
+    "answer":
+        "• If the infestation of nematode is not high (few galls on roots), it is better to use promising bio-formulations for nematode management. The bio-formulations consists of Trichoderma viride or T. harzianum, Pseudomonas fluorocence, Paecilomyces lilacinus, Pochonia chlamydosporia, Aspergillus niger and Mycorrhiza (Rhizophagus irregularis/Glomus irregularis).\n• If multiplied in FYM & used regularly (at least twice a year), can keep the nematode population below ETL. But if the infestation is high, it’s better to first go for chemical nematicide to reduce the root knot population below the damage threshold and then continuously use any of the above mentioned bio-formulations."
+  },
+  {
+    "question": "49. Which are the crops we can take as intercrop or during rest period for nematode management?",
+    "answer":
+        "Growing of Sun hemp (Crotalaria juncea) as green manure crop which also acts as resistant trap crop; planting of African marigold (Tagetes erecta) varieties or intercropping with Onion, Garlic, Rapeseed, Mustard, Sesamme is beneficial for reducing the nematode population in the field."
+  },
+  {
+    "question": "50. What are the chemical nematicides for the management of Root-knot nematode in pomegranate?",
+    "answer":
+        "• In case of severe nematode infestation, farmers can use the granular nematicide Fluensulfone 2% GR. In order to use the granular nematicide, make a small pit (5-10 cm) under the dripper and apply the granular chemical @ 10 g per dripper (Maximum dose should not exceed 40 g/plant); cover it with the soil and start watering.\n• Drenching can also be done with another nematicide like fluopyrum 34.48% SC @ 2 ml/plant. Plants should be sufficiently watered day before drenching. Mix 2 ml of the nematicide in two litre of water and pour 500 ml per dripper (4 drippers/plant) or 1000 ml per dripper (2 drippers/plant).\n• These nematicides can be used either in the rest period or in the beginning of bahar season. After one or two nematicides treatment, start the bio formulations mentioned in rest period management for check the further population build-up."
+  },
+  {
+    "question": "51. Is application of bio-fertilizers/bio-formulations advised through drip irrigation system? What is the right procedure?",
+    "answer":
+        "• No, never apply bio-fertilizers/bio-formulations through drip irrigation system. The organisms in bio-products available in market are made dormant for the convenience of long term storage. These organisms should be mixed with well decomposed farm yard manure (FYM) and incubated for bringing them in active growth stage for better multiplication and build-up of active population for successful establishment before they can be applied to the rhizosphere.\n• The right procedure is to mix 1 kg or litre (or more as per instructions on pack) pack in 1 ton of well decomposed FYM. Mix and moisten the FYM and cover it with polythene sheet in 1 feet high heaps in the shade for 10 - 15 days. Rake up the heap once every 1 - 2 days and add more water if required to maintain required humidity. Apply in root zone by mixing with soil and start irrigation."
+  },
+  {
+    "question": "52. Can bio-fertilizer/formulation and inorganic fertilizer/formulation be applied together?",
+    "answer":
+        "• No, never mix and apply bio-fertilizer/formulation and inorganic fertilizer/formulation together.\n• Bio-fertilizers have living organisms; they should not be mixed with any inorganic fertilizers / formulation / chemical as these chemicals may have direct or indirect negative effect on the microorganism’s growth and survivability. They should be applied at least 20 - 30 days after chemical application."
+  },
+  {
+    "question": "53. Which bio-formulations available in market are good for pomegranate?",
+    "answer":
+        "• Bio-formulations containing Arbuscular mychorrhizal fungi (AMF) with Glomus spp.; Aspergillus niger AN27; Trichoderma viride; Trichoderma harzianum; Paecilomyces lilacinus; Verticillium spp and Pochonia chlamydosporia are good for soil application for general plant protection against wilt and nematode.\n• They also promote plant growth and immunity. Bacillus subtilis, Pseudomonas fluorescens, Trichoderma sp. are good for foliar sprays against foliar diseases. However, count of the organism in the formulation should be at least 107-8/g or ml formulation when used and should purchase reliable tested brands and stored properly."
+  },
+  {
+    "question": "54. How to multiply the bio-formulations under field conditions and what role they play?",
+    "answer":
+        "• A large number of beneficial bio agents play very important role in improving the soil and plant health. Almost all the bio-agents (except Mycorrhiza) can multiply well in the decomposed organic manure. These bio-agents should be multiplied separately under shade. For on farm multiplication, Mix 1 kg of bio-formulation with 500 kg to 1 ton of well decomposed manure. Prepare 1 feet high bed for each formulation separately. Mix bio formulation with manure, maintain 50 – 60 % moisture in these beds and cover it with gunny bags to maintain humidity. Rake/mix the bed soil every 2-3 days. After 10-15 days of incubation, the bio agents grow profusely in the compost.\n• After multiplying the bio-agents separately, mix Mycorrhiza in the compost @ 1 kg/acre just before application and apply the bio-formulation enriched mixture @ 10-20 gram/plant. Application of these bio agents twice a year (once on start of rest, second at crop regulation) in the soil helps in improving nutrient uptake, plant growth and biochemical resistance to diseases, also checks pomegranate wilt."
+  },
+];
 
 class _AppLocalizationsDelegate
     extends LocalizationsDelegate<AppLocalizations> {
