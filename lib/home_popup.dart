@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_localizations.dart';
-import 'main.dart'; // Assuming main.dart contains LocaleProvider
+import 'main.dart';
 
 void showLanguageSelection(BuildContext context) {
   showModalBottomSheet(

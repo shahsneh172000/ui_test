@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:ui_test/auth_wrapper.dart';
 import 'app_localizations.dart';
-import 'home_screen.dart';
+import 'auth_service.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => LocaleProvider(),
-      child: const MyApp(),
-    ),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(const MyApp());
 }
 
 class LocaleProvider with ChangeNotifier {
@@ -19,7 +22,7 @@ class LocaleProvider with ChangeNotifier {
   Locale get locale => _locale;
 
   void setLocale(Locale locale) {
-    if (!AppLocalizations.supportedLocales.contains(locale)) return;
+    if (!AppLocalizations.supportedLanguages.keys.contains(locale.languageCode)) return;
     _locale = locale;
     notifyListeners();
   }
@@ -30,24 +33,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context);
-
-    return MaterialApp(
-      title: 'AnarRakshak',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Roboto',
-      ),
-      locale: provider.locale,
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        StreamProvider<User?>.value(
+          value: AuthService().user,
+          initialData: null,
+        ),
       ],
-      home: const MyHomePage(title: 'AnarRakshak'),
+      child: Consumer<LocaleProvider>(
+        builder: (context, localeProvider, child) {
+          return MaterialApp(
+            title: 'AnarRakshak',
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            locale: localeProvider.locale,
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: const AuthWrapper(),
+          );
+        },
+      ),
     );
   }
 }

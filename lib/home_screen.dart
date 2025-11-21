@@ -7,6 +7,7 @@ import 'widgets/image_source_dialog.dart';
 import 'app_localizations.dart';
 import 'faq_screen.dart';
 import 'feedback_screen.dart';
+import 'auth_service.dart';
 import 'home_popup.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -86,6 +87,11 @@ class MyHomePage extends StatelessWidget {
                 icon: const Icon(Icons.feedback_outlined, color: Color(0xFF39794F), size: 30),
                 tooltip: AppLocalizations.of(context).getString('feedbackTitle'),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const FeedbackScreen())),
+              ),
+              IconButton(
+                icon: const Icon(Icons.logout, color: Color(0xFF39794F), size: 30),
+                tooltip: 'Logout',
+                onPressed: () => AuthService().signOut(),
               ),
             ],
           ),
