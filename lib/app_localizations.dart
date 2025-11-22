@@ -335,6 +335,14 @@ class AppLocalizations {
       'Fungal Scab': 'Fungal Scab',
       'Bacterial': 'Bacterial',
       'Fungal': 'Fungal',
+      'Root Knot': 'Root Knot',
+      'Wilt': 'Wilt', // Kept for potential other uses
+      'Wilt plants': 'Wilt plants',
+      'Aphids infestation': 'Aphids infestation',
+      'Fruit borer': 'Fruit borer',
+      'Fruit fly': 'Fruit fly',
+      'Mealy Bug': 'Mealy Bug',
+      'Thrisps': 'Thrips',
       'root_subtitle': 'Check for diseases affecting the roots',
       'insects_title': 'Live & Dead Insects Images',
       'insects_subtitle': 'Identify common insects and pests',
@@ -382,6 +390,14 @@ class AppLocalizations {
       'Fungal Scab': 'फंगल स्कैब',
       'Bacterial': 'जीवाणु',
       'Fungal': 'कवक',
+      'Root Knot': 'रूट नॉट',
+      'Wilt': 'विल्ट', // Kept for potential other uses
+      'Wilt plants': 'विल्ट पौधे',
+      'Aphids infestation': 'एफिड्स का प्रकोप',
+      'Fruit borer': 'फल छेदक',
+      'Fruit fly': 'फल मक्खी',
+      'Mealy Bug': 'मिली बग',
+      'Thrisps': 'थ्रिप्स',
       'management': {
         "Bacterial Blight": {
           "diseaseName": "रोग: बैक्टीरियल ब्लाइट",
@@ -905,6 +921,14 @@ class AppLocalizations {
       'Fungal Scab': 'फंगल स्कॅब',
       'Bacterial': 'बॅक्टेरियल',
       'Fungal': 'बुरशीजन्य',
+      'Root Knot': 'रूट नॉट',
+      'Wilt': 'विल्ट', // Kept for potential other uses
+      'Wilt plants': 'विल्ट झाडे',
+      'Aphids infestation': 'मावा प्रादुर्भाव',
+      'Fruit borer': 'फळ पोखरणारी अळी',
+      'Fruit fly': 'फळमाशी',
+      'Mealy Bug': 'पिठ्या ढेकूण',
+      'Thrisps': 'फुलकिडे',
       'selectLanguage': 'भाषा निवडा',
       'diseases': 'रोग',
       'insectsAndPests': 'कीटक आणि कीड',
@@ -973,6 +997,14 @@ class AppLocalizations {
       'Fungal Scab': 'ફંગલ દાગ',
       'Bacterial': 'બેક્ટેરિયલ',
       'Fungal': 'ફંગલ',
+      'Root Knot': 'રુટ નોટ',
+      'Wilt': 'વિલ્ટ', // Kept for potential other uses
+      'Wilt plants': 'વિલ્ટ છોડ',
+      'Aphids infestation': 'એફિડ્સનો ઉપદ્રવ',
+      'Fruit borer': 'ફળ કોરી ખાનાર',
+      'Fruit fly': 'ફળ માખી',
+      'Mealy Bug': 'ચીકટો',
+      'Thrisps': 'થ્રીપ્સ',
       'faqTitle': 'વારંવાર પૂછાતા પ્રશ્નો',
       'flowers': 'પાંદડા/ફૂલ/ફળ',
       'insects': 'જંતુઓ',
@@ -1280,6 +1312,14 @@ class AppLocalizations {
       'Fungal Scab': 'ఫంగల్ మచ్చ',
       'Bacterial': 'బాక్టీరియా',
       'Fungal': 'ఫంగల్',
+      'Root Knot': 'రూట్ నాట్',
+      'Wilt': 'విల్ట్', // Kept for potential other uses
+      'Wilt plants': 'విల్ట్ మొక్కలు',
+      'Aphids infestation': 'అఫిడ్స్ ముట్టడి',
+      'Fruit borer': 'పండు తొలుచు పురుగు',
+      'Fruit fly': 'పండు ఈగ',
+      'Mealy Bug': 'పిండి నల్లి',
+      'Thrisps': 'తామర పురుగులు',
       'management': {
         "Bacterial Blight": {
           "diseaseName": "వ్యాధి: బాక్టీరియా బ్లైట్",
@@ -1570,6 +1610,14 @@ class AppLocalizations {
       'Fungal Scab': 'ಶಿಲೀಂಧ್ರ ಮಸಿ',
       'Bacterial': 'ಬ್ಯಾಕ್ಟೀರಿಯಾ',
       'Fungal': 'ಶಿಲೀಂಧ್ರ',
+      'Root Knot': 'ರೂಟ್ ನಾಟ್',
+      'Wilt': 'ವಿಲ್ಟ್', // Kept for potential other uses
+      'Wilt plants': 'ವಿಲ್ಟ್ ಗಿಡಗಳು',
+      'Aphids infestation': 'ಏಫಿಡ್ ಮುತ್ತಿಕೊಳ್ಳುವಿಕೆ',
+      'Fruit borer': 'ಹಣ್ಣು ಕೊರಕ',
+      'Fruit fly': 'ಹಣ್ಣಿನ ನೊಣ',
+      'Mealy Bug': 'ಹಿಟ್ಟು ತಿಗಣೆ',
+      'Thrisps': 'ಥ್ರಿಪ್ಸ್',
       'management': {
         "Bacterial Blight": {
           "diseaseName": "ರೋಗ: ಬ್ಯಾಕ್ಟೀರಿಯಾದ ಬ್ಲೈಟ್",
@@ -1850,6 +1898,14 @@ class AppLocalizations {
       'Scab Fungus': 'Fungal Scab',
       'Bacterial': 'Bacterial',
       'Fungal': 'Fungal',
+      'Root Knot': 'Root Knot',
+      'Wilt': 'Wilt',
+      'Wilt plants': 'Wilt plants',
+      'Aphids infestation': 'Aphids infestation',
+      'Fruit borer': 'Fruit borer',
+      'Fruit fly': 'Fruit fly',
+      'Mealy Bug': 'Mealy Bug',
+      'Thrisps': 'Thrips',
     };
 
     final managementKey = labelToManagementKey[diseaseName];

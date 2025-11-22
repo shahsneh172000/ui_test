@@ -76,6 +76,8 @@ flutter:
     - assets/icons/
     - assets/KD.onnx
     - assets/LeafModel.onnx
+    - assets/RootModel.onnx
+    - assets/insects.onnx
 flutter_launcher_icons:
   android: true
   ios: true

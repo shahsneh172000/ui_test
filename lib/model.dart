@@ -34,7 +34,17 @@ Future<Map<String, dynamic>> runInference(
 
   // Process output
   if (outputs.isNotEmpty && outputs[0] != null) {
-    final logits = (outputs[0]!.value as List<List<double>>)[0];
+    final outputValue = outputs[0]!.value;
+    List<double> logits;
+
+    if (outputValue is List<List<double>> && outputValue.isNotEmpty) {
+      logits = outputValue[0];
+    } else if (outputValue is List<double>) {
+      logits = outputValue;
+    } else {
+      // Handle unexpected type
+      return {'result': 'Error: Unexpected output type', 'confidence': 0.0};
+    }
     final probabilities = _softmax(logits);
 
     double maxProbability = 0;

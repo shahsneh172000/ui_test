@@ -31,7 +31,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'advisory.pomegmail.com',
+      path: 'advisory.pome@gmail.com',
       query: 'subject=App Feedback&body=${Uri.encodeComponent(feedbackText)}',
     );
 

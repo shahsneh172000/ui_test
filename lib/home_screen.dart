@@ -174,10 +174,17 @@ class MyHomePage extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () async {
+          onTap: () async { // Updated onTap logic
             final localizations = AppLocalizations.of(context);
-            if (title == localizations.getString('fruit') ||
-                title == localizations.getString('leaf')) {
+            // Check if the button is one of the active ones
+            final isActive = title == localizations.getString('fruit') || // Fruits & Flowers
+                             title == localizations.getString('leaf') || // Leaf
+                             title == localizations.getString('root') || // Roots
+                             title == localizations.getString('insects_title'); // Live & Dead Insects
+
+            // The 'flowers_title' button is currently disabled
+            if (isActive) {
+              // For active buttons, show the image source dialog
               await showImageSourceDialog(
                 context: context,
                 categoryTitle: title,
@@ -299,6 +306,18 @@ Future<void> _pickImageAndGo(
     if (categoryTitle == localizations.getString('leaf')) {
       modelName = 'LeafModel.onnx';
       labels = ['Bacterial', 'Fungal', 'Healthy'];
+    } else if (categoryTitle == localizations.getString('root')) {
+      modelName = 'RootModel.onnx';
+      labels = ['Root Knot', 'Wilt plants'];
+    } else if (categoryTitle == localizations.getString('insects_title')) {
+      modelName = 'insects.onnx';
+      labels = [
+        'Aphids infestation',
+        'Fruit borer',
+        'Fruit fly',
+        'Mealy Bug',
+        'Thrisps'
+      ];
     } else {
       modelName = 'KD.onnx';
       labels = [
